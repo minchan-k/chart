@@ -29,7 +29,7 @@ const App = () => {
             <h1>Real Time CPU Usage</h1>
             <LineChart width={1200} height={300} data={data}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <XAxis dataKey="name" angle={3} />
+                <XAxis dataKey="name" angle={3} tickCount={5} />
                 <YAxis />
                 <CartesianGrid strokeDasharray="3"/>
                 <Legend align="left" verticalAlign='middle'
