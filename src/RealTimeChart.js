@@ -16,27 +16,29 @@ const socket = io('http://localhost:3000', {
 })
 
 const RealTimeChart = () => {
-    const [data, setData] = useState([]);
+    const arr = [];
+    for (let i = 0; i < 119; i++) {
+        arr.push({name: 'no signal', value: 0});
+    }
+    const [data, setData] = useState(arr);
     // 1. listen for a cpu event and update the state
-    console.log(1)
     useEffect(() => {
         socket.on('cpu', (cpuPercent) => {
-            setData(prevData => [...prevData.slice(-130), cpuPercent]);
+            setData(prevData => [...prevData.slice(-119), cpuPercent]);
         })
     }, []);
     // 2. render the line chart using the state
     return (
         <>
             <h1>Real Time CPU Usage</h1>
-            <LineChart width={1100} height={300} data={data}
+            <LineChart width={1000} height={300} data={data}
                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <XAxis dataKey="name" angle={3} />
+                <XAxis dataKey="name" angle={5} />
                 <YAxis />
-                <CartesianGrid strokeDasharray="10"/>
+                <CartesianGrid strokeDasharray="3"/>
                 <Legend align="left" verticalAlign='middle'
                         layout="vertical"
                         margin={{right: 40}}/>
-                <Tooltip />
                 <Line type="monotone" dataKey="value" stroke="#8884d8" />
             </LineChart>
         </>
