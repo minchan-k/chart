@@ -9,6 +9,7 @@ import {
     Legend,
     XAxis,
     YAxis,
+    ResponsiveContainer
 } from "recharts";
 
 const socket = io('http://localhost:3000', {
@@ -31,16 +32,18 @@ const RealTimeChart = () => {
     return (
         <>
             <h1>Real Time CPU Usage</h1>
-            <LineChart width={1000} height={300} data={data}
-                       margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <XAxis dataKey="name" angle={5} />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3"/>
-                <Legend align="left" verticalAlign='middle'
-                        layout="vertical"
-                        margin={{right: 40}}/>
-                <Line type="monotone" dataKey="value" stroke="#8884d8" />
-            </LineChart>
+            <ResponsiveContainer width={1000} height={500} >
+                <LineChart data={data}
+                           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <XAxis dataKey="name" angle={5} />
+                    <YAxis />
+                    <CartesianGrid strokeDasharray="3"/>
+                    <Legend align="left" verticalAlign='middle'
+                            layout="vertical"
+                            margin={{right: 40}}/>
+                    <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                </LineChart>
+            </ResponsiveContainer>
         </>
     )
 }
