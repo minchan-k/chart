@@ -14,10 +14,10 @@ import {LineChart,
 function Chart() {
     const [response, setResponse] = useState([]);
     const [time,setTime] = useState('');
-    const [arr,setArr] = useState([{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:5},{X:5},{X:5},{X:5},{X:5},{X:5},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:5},{X:5},{X:5},{X:5},{X:5},{X:5},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:5},{X:5},{X:5},{X:5},{X:5},{X:5},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:0},{X:5},{X:5},{X:5},{X:5},{X:5},{X:5},{X:0},{X:0},{X:0},{X:0},{X:0}]);
+    const [arr,setArr] = useState([]);
     const timeoutRef = useRef(null);
     function validate() {
-        setArr((prevState)=>[...prevState,{X:(Math.random()>=0.5)? 5 : 0}].slice(1))
+        setArr((prevState)=> prevState.length >= 70 ?  [...prevState,{X:(Math.random()>=0.5)? 5 : 0}].slice(1) : [...prevState,{X:(Math.random()>=0.5)? 5 : 0}])
     }
     console.log(1)
 
@@ -26,7 +26,7 @@ function Chart() {
             clearTimeout(timeoutRef.current);
         }
         let interval = 6000;
-        let speed = 100;
+        let speed = 300;
         for(let i=0;i<interval;i++){
             timeoutRef.current = setTimeout(()=> {
                 timeoutRef.current = null;
@@ -44,7 +44,7 @@ function Chart() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="X" stroke="#8884d8" />
+                <Line type="monotone" dataKey="X" stroke="#8884d8" isAnimationActive={false} />
 
             </LineChart>
 

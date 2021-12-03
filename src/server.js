@@ -15,7 +15,7 @@ io.on('connection', (client) => {
                 value: cpuPercent
             });
         });
-    }, 3000)
+    }, 100)
 });
 
 
