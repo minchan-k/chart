@@ -15,7 +15,8 @@ io.on('connection', (client) => {
                 value: cpuPercent
             });
         });
-    }, 100)
+        // 2초마다 자료를 줄 때 기준
+    }, 2000)
 });
 
 

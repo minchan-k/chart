@@ -36,7 +36,8 @@ const App = () => {
                         layout="vertical"
                         margin={{right: 40}}/>
                 <Tooltip />
-                <Line type="monotone" dataKey="value" stroke="#8884d8" isAnimationActive={false} />
+                <Line type="monotone" dataKey="value" stroke="#8884d8"
+                      dot={false} isAnimationActive={false} />
             </LineChart>
         </>
     )

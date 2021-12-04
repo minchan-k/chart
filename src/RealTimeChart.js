@@ -23,19 +23,31 @@ const socket = io('http://localhost:3000', {
     transports: ['websocket', 'polling']
 })
 
+// 배열에 초기상태 집어넣기
+const arr = [];
+for (let i = 0; i < 120; i++) {
+    arr.push({name: 'loading', value: 0});
+}
+
 const RealTimeChart = () => {
-    const arr = [];
-    for (let i = 0; i < 119; i++) {
-        arr.push({name: 'loading', value: 0});
-    }
     const [data, setData] = useState(arr);
-    // 1. listen for a cpu event and update the state
+
     useEffect(() => {
-        socket.on('cpu', (cpuPercent) => {
+        // 초기 값을 넣지 않으면 server에서 데이터를 받기 전까지 오류가 생김
+        let cpuPercent = {
+            name: 'loading', value: 0
+        };
+        socket.on('cpu', (data) => {
+            cpuPercent = data;
+        });
+        const interval = setInterval(() => {
             setData(prevData => [...prevData.slice(-119), cpuPercent]);
-        })
-    }, []);
-    // 2. render the line chart using the state
+            // 시간을 길게 할수록 리랜더링 횟수가 줄어듬
+        }, 100);
+        return () => clearInterval(interval);
+    },[]);
+    console.log(1);
+
     return (
         <Container>
             <ResponsiveContainer width={"100%"} height={"100%"} >
@@ -47,7 +59,8 @@ const RealTimeChart = () => {
                     <Legend align="left" verticalAlign='middle'
                             layout="vertical"
                     />
-                    <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="value" stroke="#8884d8"
+                          dot={false} isAnimationActive={false} />
                 </LineChart>
             </ResponsiveContainer>
         </Container>
