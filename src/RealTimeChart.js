@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const socket = io('http://localhost:3000', {
     transports: ['websocket', 'polling']
-})
+});
 
 // 배열에 초기상태 집어넣기
 const arr = [];
@@ -46,7 +46,6 @@ const RealTimeChart = () => {
         }, 100);
         return () => clearInterval(interval);
     },[]);
-    console.log(1);
 
     return (
         <Container>
