@@ -7,14 +7,10 @@ const data = {
     datasets: [
         {
             label: "Dataset 1",
-
-            fill: false,
-            lineTension: 0.4,
-            backgroundColor: "#f44336",
-            borderColor: "#f44336",
-            borderJoinStyle: "miter",
-            pointRadius: 0,
-            showLine: true,
+            borderColor: "rgb(255, 99, 132)",
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            lineTension: 0,
+            borderDash: [8, 4],
             data: []
         }
     ]
@@ -26,29 +22,13 @@ const options = {
             {
                 type: "realtime",
                 realtime: {
-                    onRefresh: function () {
+                    onRefresh: function() {
                         data.datasets[0].data.push({
                             x: Date.now(),
                             y: Math.random() * 100
                         });
                     },
-                    delay: 300,
-                    refresh: 300
-                }
-            }
-        ],
-        yAxes: [
-            {
-                scaleLabel: {
-                    display: true,
-                    fontFamily: "Arial",
-                    labelString: "Moment",
-                    fontSize: 20,
-                    fontColor: "#6c757d"
-                },
-                ticks: {
-                    max: 100,
-                    min: 0
+                    delay: 2000
                 }
             }
         ]
