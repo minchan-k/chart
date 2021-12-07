@@ -2,7 +2,7 @@ const server = require('http').createServer();
 const os = require('os-utils');
 
 const io = require('socket.io')(server, {
-    transports: ['websocket', 'polling']
+    transports: ['websocket']
 });
 
 // 1. listen for socket connections
@@ -11,7 +11,7 @@ io.on('connection', (client) => {
         // 2. every second, emit a 'cpu' event to user
         os.cpuUsage((cpuPercent) => {
             client.emit('cpu', {
-                name: `${new Date().getMinutes()} : ${new Date().getSeconds() >= 10 && new Date().getSeconds() !== 0 ? new Date().getSeconds() : '0'+new Date().getSeconds()}`,
+                name: `${new Date().getMinutes()}:${new Date().getSeconds() >= 10 && new Date().getSeconds() !== 0 ? new Date().getSeconds() : '0'+new Date().getSeconds()}`,
                 value: cpuPercent
             });
         });
