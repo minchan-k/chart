@@ -20,12 +20,12 @@ const Container = styled.div`
 `;
 
 const socket = io('http://localhost:3000', {
-    transports: ['websocket', 'polling']
-});
+    transports: ['websocket']
+})
 
 // 배열에 초기상태 집어넣기
 const arr = [];
-for (let i = 0; i < 120; i++) {
+for (let i = 0; i < 1200; i++) {
     arr.push({name: 'loading', value: 0});
 }
 
@@ -41,9 +41,9 @@ const RealTimeChart = () => {
             cpuPercent = data;
         });
         const interval = setInterval(() => {
-            setData(prevData => [...prevData.slice(-119), cpuPercent]);
+            setData(prevData => [...prevData.slice(-1199), cpuPercent]);
             // 시간을 길게 할수록 리랜더링 횟수가 줄어듬
-        }, 100);
+        }, 10);
         return () => clearInterval(interval);
     },[]);
 
