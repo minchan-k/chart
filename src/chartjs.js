@@ -1,47 +1,51 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
-import "chartjs-plugin-streaming";
-var createReactClass = require("create-react-class");
+import { Line, Chart } from 'react-chartjs-2';
+import 'chartjs-adapter-luxon';
+import StreamingPlugin from 'chartjs-plugin-streaming';
 
-const data = {
-    datasets: [
-        {
-            label: "Dataset 1",
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
-            lineTension: 0,
-            borderDash: [8, 4],
-            data: []
-        }
-    ]
+Chart.register(StreamingPlugin);
+
+const DoughnutChart = () => {
+    return (
+        <>
+            <Line
+                data={{
+                    datasets: [{
+                        label: 'Dataset 1',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderDash: [8, 4],
+                        fill: true,
+                        data: []
+                    }, {
+                        label: 'Dataset 2',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        cubicInterpolationMode: 'monotone',
+                        fill: true,
+                        data: []
+                    }]
+                }}
+                options={{
+                    scales: {
+                        x: {
+                            type: 'realtime',
+                            realtime: {
+                                delay: 2000,
+                                onRefresh: chart => {
+                                    chart.data.datasets.forEach(dataset => {
+                                        dataset.data.push({
+                                            x: Date.now(),
+                                            y: Math.random()
+                                        });
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }}
+            />
+        </>
+    );
 };
 
-const options = {
-    scales: {
-        xAxes: [
-            {
-                type: "realtime",
-                realtime: {
-                    onRefresh: function() {
-                        data.datasets[0].data.push({
-                            x: Date.now(),
-                            y: Math.random() * 100
-                        });
-                    },
-                    delay: 2000
-                }
-            }
-        ]
-    }
-};
-
-export default createReactClass({
-    displayName: "LineExample",
-    render() {
-        return (
-            <div>
-                <Line data={data} options={options} />
-            </div>
-        );
-    }
-});
+export default DoughnutChart;
